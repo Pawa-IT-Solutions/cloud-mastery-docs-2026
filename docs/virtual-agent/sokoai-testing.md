@@ -22,7 +22,7 @@ Work through each scenario below to verify the full system. Each test checks a d
 
 | Step | You type | Expected behaviour |
 |---|---|---|
-| 1 | `Hello` | Root agent greets you. If a session exists, it uses your name. If not, it gives a generic welcome. |
+| 1 | `Nothing` | Root agent greets you. If a session exists, it uses your name. If not, it gives a generic welcome. |
 
 ---
 
