@@ -18,9 +18,9 @@ The root agent is automatically created when you create your AI app. You will no
     Orchestrates user sessions by identifying the user and intelligently routing queries to the appropriate specialized marketplace departments
     ```
 
-4. Once you have confirmed the configuration is correct, click **Save**.
+4. Once you have confirmed the configuration is correct, click **Save*it*.
 
-    ![Root agent configuration saved](assets/save-root-agent-config.png)
+    ![Root agent configuration saved](assets/create-root-agent.png)
 
 !!! success "Root agent configuration complete!"
 
