@@ -125,7 +125,7 @@ When all four sub-agents have been created, your Agent Builder page should look 
     <a href="../sokoai-setup/" class="btn-secondary">← Previous: Initial Setup</a>
   </div>
   <div class="nav-item">
-    <span><strong>Section 27</strong> - SokoAI: Building Playbooks</span>
+    <span><strong>SokoAI: Building Playbooks</strong></span>
   </div>
   <div class="nav-item">
     <a href="../sokoai-tools/" class="btn-primary">Next: Setting Up Tools →</a>

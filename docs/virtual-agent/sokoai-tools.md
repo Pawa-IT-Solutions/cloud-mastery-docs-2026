@@ -628,7 +628,7 @@ This widget displays product cards visually inside the chat interface for both t
     <a href="../sokoai-playbooks/" class="btn-secondary">← Previous: Building Playbooks</a>
   </div>
   <div class="nav-item">
-    <span><strong>Section 28</strong> - SokoAI: Setting Up Tools</span>
+    <span><strong>SokoAI: Setting Up Tools</strong></span>
   </div>
   <div class="nav-item">
     <a href="../sokoai-agent-instructions/" class="btn-primary">Next: Agent Instructions →</a>

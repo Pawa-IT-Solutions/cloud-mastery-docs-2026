@@ -123,7 +123,7 @@ Work through each scenario below to verify the full system. Each test checks a d
     <a href="../sokoai-deployment/" class="btn-secondary">← Previous: Deployment</a>
   </div>
   <div class="nav-item">
-    <span><strong>Section 31</strong> - SokoAI: Testing</span>
+    <span><strong>SokoAI: Testing</strong></span>
   </div>
   <div class="nav-item">
     <a href="/end-of-training/" class="btn-primary">Next: End of Training →</a>

@@ -51,7 +51,7 @@ In this step, you will log into the CX Agent Studio, select your project, and cr
     <a href="../sokoai-lab/" class="btn-secondary">← Previous: Lab Overview</a>
   </div>
   <div class="nav-item">
-    <span><strong>Section 26</strong> - SokoAI: Initial Setup</span>
+    <span><strong>SokoAI: Initial Setup</strong></span>
   </div>
   <div class="nav-item">
     <a href="../sokoai-playbooks/" class="btn-primary">Next: Building Playbooks →</a>

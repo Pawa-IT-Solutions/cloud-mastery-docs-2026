@@ -77,10 +77,10 @@ This lab is divided into the following steps:
 
 <div class="page-nav">
   <div class="nav-item">
-    <a href="../data-pipeline-visualize-looker/" class="btn-secondary">← Previous: Visualize Data</a>
+    <a href="../../devops/accessing-the-application" class="btn-secondary">← Previous: Access the Application</a>
   </div>
   <div class="nav-item">
-    <span><strong>Section 25</strong> - SokoAI: Multi-Agent Lab Overview</span>
+    <span><strong>SokoAI: Multi-Agent Lab Overview</strong></span>
   </div>
   <div class="nav-item">
     <a href="../sokoai-setup/" class="btn-primary">Next: Initial Setup →</a>

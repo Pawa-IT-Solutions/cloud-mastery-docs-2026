@@ -76,6 +76,6 @@ You need to manually trigger the `sync-mysql-to-bq` Cloud Function once. This po
     <span><strong>Access the Application</strong></span>
   </div>
   <div class="nav-item">
-    <a href="/data-analytics/data-analytics-lab/" class="btn-primary">Next: Analytics Lab →</a>
+    <a href="/virtual-agent/sokoai-lab" class="btn-primary">Next: Build Your Agent →</a>
   </div>
 </div>
