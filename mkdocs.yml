@@ -1,0 +1,120 @@
+site_name: Pawa IT Cloud Mastery Training
+site_author: Pawa IT Solutions
+site_description: A comprehensive training guide for Cloud Mastery covering DevOps and Virtual Agents.
+site_url: https://docs.cloudpartner.africa
+
+theme:
+  name: material
+  logo: assets/images/logo.svg
+  favicon: assets/images/favicon.ico
+  features:
+    - search.suggest
+    - search.highlight
+    - content.code.annotate
+    - content.code.copy
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - toc.integrate
+    - navigation.instant
+    - navigation.tracking
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - codehilite:
+      guess_lang: false
+      use_pygments: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition  # This enables !!! note syntax
+  - pymdownx.details  # This enables collapsible admonitions
+
+extra_css:
+  - assets/css/extra.css
+
+nav:
+  - Home: index.md
+  - "Introduction":
+      - "Cloud Mastery Training Introduction": introduction.md
+  - "Application Migration to GCP":
+      - "Migration Overview": migration/migration-overview.md
+      - "Prepare On-Prem VM": migration/migration-prepare-vm.md
+      - "Create VM Disk Image": migration/migration-create-image.md
+      - "Create GCS Bucket": migration/migration-gcs-bucket.md
+      - "Install & Configure GCloud CLI": migration/migration-gcloud-cli.md
+      - "Upload Image to GCS": migration/migration-upload-image.md
+      - "Create GCP VPC": migration/migration-create-vpc.md
+      - "Import VMDK as GCP Image": migration/migration-import-image.md
+      - "Create GCP VM Instance": migration/migration-create-vm.md
+      - "Access & Configure VM": migration/migration-access-vm.md
+      - "Update DNS Records": migration/migration-dns-update.md
+  - "Automate Securely":
+      - "DevOps & CI/CD on GCP Lab": devops/devops-lab.md
+      - "Database setup": devops/setup-cloud-sql.md
+      - "Github setup": devops/setup-github.md
+      - "Setup Backend Repository": devops/setup-backend-repository.md
+      - "Setup Backend Pipeline": devops/setup-backend-pipeline.md
+      - "Setup Frontend Repository": devops/setup-frontend-repository.md
+      - "Setup Cloud Build for Frontend": devops/setup-frontend-pipeline.md
+      - "Access the Application": devops/accessing-the-application.md
+  - "Data to Dashboards":
+      - "Pipeline Overview": data-analytics/data-analytics-lab.md
+      - "Setup BigQuery": data-analytics/data-pipeline-setup-bigquery.md
+      - "Create Cloud Function": data-analytics/data-pipeline-create-function.md
+      - "Schedule with Cloud Scheduler": data-analytics/data-pipeline-schedule-job.md
+      - "Visualize with Looker Studio": data-analytics/data-pipeline-visualize-looker.md
+  - "Build Your Agent":
+      - "SokoAI Multi-Agent System Overview": virtual-agent/sokoai-lab.md
+      - "Phase 1: Initial Setup": virtual-agent/sokoai-setup.md
+      - "Phase 2A: Building Playbooks": virtual-agent/sokoai-playbooks.md
+      - "Phase 2B: Setting Up Tools": virtual-agent/sokoai-tools.md
+      - "Phase 2C: Agent Instructions": virtual-agent/sokoai-agent-instructions.md
+      - "Phase 3: Deployment": virtual-agent/sokoai-deployment.md
+      - "Phase 4: Testing": virtual-agent/sokoai-testing.md
+  - "End of Training":
+      - "End of Training": end-of-training.md
+extra:
+  generator: false
+
+plugins:
+  - search
+  - awesome-pages
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
