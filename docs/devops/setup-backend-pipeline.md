@@ -169,6 +169,9 @@ The repository includes a helper script (`setup-github-wif.sh` / `setup-github-w
     ./setup-github-wif.sh
     ```
 
+!!! note
+    This might take around 5-10 mins to run successfully.
+
 ### Expected Output
 
 After a successful run you will see:
