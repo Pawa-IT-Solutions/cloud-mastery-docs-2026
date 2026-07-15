@@ -1,10 +1,10 @@
-# Phase 2: Building Playbooks
+# Step 2: Building Playbooks
 
-In this phase, you will configure the **Root Agent** and create four **Specialist Sub-Agents**. These playbooks define the agent hierarchy that powers the SokoAI conversation routing.
+In this step, you will configure the **Root Agent** and create four **Specialist Sub-Agents**. These playbooks define the agent hierarchy that powers SokoAI conversation routing.
 
 ---
 
-## Part A: Configure the Root Playbook
+## Part A: Configure the Root Playbook (Soko AI Agent)
 
 The root agent is automatically created when you create your AI app. You will now configure it with a name and description.
 
@@ -18,7 +18,7 @@ The root agent is automatically created when you create your AI app. You will no
     Orchestrates user sessions by identifying the user and intelligently routing queries to the appropriate specialized marketplace departments
     ```
 
-4. Once you have confirmed the instructions are correct, click **Save**.
+4. Once you have confirmed the configuration is correct, click **Save**.
 
     ![Root agent configuration saved](assets/save-root-agent-config.png)
 
@@ -30,15 +30,18 @@ The root agent is automatically created when you create your AI app. You will no
 
 You will now create four sub-agents. Each is an independent Playbook that the root agent can hand off to.
 
-### Step 1: Add a Sub-Agent
+### Add a Sub-Agent
 
 1. Click the **`+` sign** at the bottom of the root agent node, then select **Add new sub-agent**.
 
-    ![Add new sub-agent option](assets/<!-- ADD IMAGE: image10 equivalent - Add new sub-agent -->)
+    <!-- ADD IMAGE: image10 - Add new sub-agent option -->
 
 2. When the following pop-up appears, click **Create Anyway** to disable Gemini helpers and proceed.
 
-    ![Create anyway pop-up confirmation](assets/<!-- ADD IMAGE: image11 equivalent - Create Anyway popup -->)
+    !!! note
+        This action disables Gemini recommendations. Click **Create Anyway** to continue.
+
+    <!-- ADD IMAGE: image11 - Create Anyway popup -->
 
 ---
 
@@ -112,7 +115,7 @@ When all four sub-agents have been created, your Agent Builder page should look 
 
 ![Complete agent setup with all sub-agents](assets/page-after-creating-all-agent.png)
 
-!!! success "Phase 2A Complete"
+!!! success "Step 2 Complete"
     All five playbooks are now configured. In the next step, you will create the tools that power these agents.
 
 ---

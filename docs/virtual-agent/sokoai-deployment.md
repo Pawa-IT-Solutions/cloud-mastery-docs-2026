@@ -1,22 +1,22 @@
-# Phase 3: Deploying the Agent
+# Step 5: Deploying the Agent
 
-In this phase, you will publish the SokoAI agent and embed it into the SokoAI marketplace website using a web widget.
+In this step, you will publish the SokoAI agent and embed it into the SokoAI marketplace website using a web widget.
 
 ---
 
-## Step 1: Open the Publish Panel
+## Open the Publish Panel
 
-1. Navigate to the top of your Agent Builder page and click the **Publish** icon (highlighted in the top navigation bar).
+1. Navigate to the top of your Agent Builder page and click the highlighted **Publish** icon in the top navigation bar.
 
-    ![Navigate to publish/deploy icon](assets/<!-- ADD IMAGE: image53 equivalent - Publish icon in top nav -->)
+    <!-- ADD IMAGE: image57 - Publish icon in top nav -->
 
 2. This takes you to the deployment options page. Select **Create web widget**.
 
-    ![Select Create web widget deployment option](assets/<!-- ADD IMAGE: image54 equivalent - Create web widget selection -->)
+    <!-- ADD IMAGE: image58 - Create web widget selection -->
 
 ---
 
-## Step 2: Configure the Web Widget
+## Configure the Web Widget
 
 A configuration page opens. Complete the following settings:
 
@@ -26,43 +26,50 @@ A configuration page opens. Complete the following settings:
 
     ![Select deployment version](assets/agent deploy name + create.png)
 
-3. **Input method** — Switch the agent's input method to enable **Text input** (the default may be restricted).
+3. **Input method** — Switch the agent's input method to enable **Text input**.
 
-4. **Agent title** — Enter the title that will appear in the chat widget when it is live on the website:
+4. **Agent title** — Enter the title that will appear on the chat widget when it is live on the website:
 
     ```
     SokoAI Agent
     ```
 
-5. **Public access** — Enable public access.
+5. **Public access** — Enable public access to allow unauthenticated users.
 
-6. **reCAPTCHA** — Enable reCAPTCHA to prevent bot traffic abuse.
+6. Click **Create Channel** to complete web widget creation.
 
-7. Click **Create Channel** to complete web widget creation.
-
-    ![Create channel - final widget configuration](assets/<!-- ADD IMAGE: image56 equivalent - Create Channel button and final config -->)
+    <!-- ADD IMAGE: image60 - Create Channel button and final config -->
 
 ---
 
-## Step 3: Copy the Deployment ID
+## Copy the Deployment ID
 
 1. After the channel is created, deployment instructions will be displayed.
+
 2. Using the **copy icon**, copy the **Deployment ID**.
 
+    <!-- ADD IMAGE: image61 - Deployment instructions with copy icon -->
+
     !!! tip
-        You will need this Deployment ID when redeploying the website. Add it as an environment variable in your hosting configuration.
+        You will use this Deployment ID as an environment variable when redeploying the website.
 
 ---
 
-## Step 4: Redeploy the Website
+## Redeploy the Website
 
-1. Add the copied Deployment ID as a new environment variable in your website's hosting configuration.
-2. Redeploy the website.
-3. Once deployed, the **SokoAI Agent** chat widget will appear in the **bottom right corner** of the website.
+1. Go to your **Repository settings**.
+2. Select **Secrets and variables → Actions**.
+3. Update the secret `FRONTEND_NEXT_PUBLIC_CHAT_DEPLOYMENT` with the Deployment ID you copied.
+
+    <!-- ADD IMAGE: image62 - GitHub secrets update -->
+
+4. Trigger a redeployment of the website.
+
+5. Once deployed, the **SokoAI Agent** chat widget will appear in the bottom right corner of the website.
 
 ---
 
-!!! success "Phase 3 Complete"
+!!! success "Step 5 Complete"
     The SokoAI agent is now live and embedded in the website. Proceed to testing to verify the full conversation flow.
 
 ---

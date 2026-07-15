@@ -1,4 +1,4 @@
-# Phase 4: Testing the Workflow
+# Step 6: Testing the Workflow
 
 Now that the SokoAI agent is deployed, use the built-in **Preview pane** to verify that all agents and routing work correctly before going live.
 
@@ -58,8 +58,8 @@ Work through each scenario below to verify the full system. Each test checks a d
 
 | Step | You type | Expected behaviour |
 |---|---|---|
-| 1 | `What are the best MMFs right now?` | Finance Agent calls `finance_table` or `lookup_finsearch` and responds with results. Response ends with the compliance note. |
-| 2 | `idk mahn what do you recommend?` | Finance Agent responds in a matching casual tone, still within the 40-word limit. |
+| 1 | `What are the best MMFs right now?` | Finance Agent calls `finance_table` or `lookup_finance` and responds with results. Response ends with the compliance note. |
+| 2 | `idk mahn what do you recommend?` | Finance Agent responds in a matching casual tone, within the 40-word limit. |
 
 ---
 
@@ -80,8 +80,8 @@ Work through each scenario below to verify the full system. Each test checks a d
 
 | Step | You type | Expected behaviour |
 |---|---|---|
-| 1 | While in the Marketplace Agent, type: `I want to invest in bonds` | Marketplace Agent silently transfers to Root Agent, which then routes to Finance Agent. |
-| 2 | While in the Carparts Agent, type: `I need tomatoes` | Carparts Agent silently transfers to Root Agent, which routes to Marketplace Agent. |
+| 1 | While in the Marketplace Agent: `I want to invest in bonds` | Marketplace Agent silently transfers to Root Agent, which then routes to Finance Agent. |
+| 2 | While in the Carparts Agent: `I need tomatoes` | Carparts Agent silently transfers to Root Agent, which routes to Marketplace Agent. |
 
 ---
 
@@ -92,7 +92,7 @@ Work through each scenario below to verify the full system. Each test checks a d
 | Step | You type | Expected behaviour |
 |---|---|---|
 | 1 | `Do you give discounts?` | Root Agent responds with the discount message in English or Swahili depending on the question language. |
-| 2 | `I want to speak to a human` | Root Agent responds with the escalation message explaining no live agent is available. |
+| 2 | `I want to speak to a human` | Root Agent responds explaining no live agent is currently available. |
 | 3 | `Goodbye` | Root Agent calls `end_session` and closes the conversation with a farewell message. |
 
 ---

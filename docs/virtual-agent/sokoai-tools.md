@@ -1,6 +1,6 @@
-# Phase 2: Setting Up Tools
+# Step 3: Setting Up Tools
 
-In this phase, you will create all the tools that power the SokoAI agents. Tools connect your agents to real backend services — Cloud Run APIs, BigQuery, and Google Search.
+In this step, you will create all the tools that power the SokoAI agents. Tools connect your agents to real backend services — Cloud Run APIs, BigQuery, and Google Search.
 
 ---
 
@@ -25,6 +25,8 @@ In this phase, you will create all the tools that power the SokoAI agents. Tools
 
 2. In the side panel that opens, click the **`+`** button next to the search input to add a new tool.
 
+    <!-- ADD IMAGE: image18 - tools panel with + button -->
+
 ---
 
 ## Tool 1: `process_cart` (OpenAPI)
@@ -33,7 +35,7 @@ This tool connects to the Cloud Run cart service and handles all cart operations
 
 1. Click **`+`** in the tools panel, then select the **OpenAPI** connector.
 
-    ![Select OpenAPI connector](assets/<!-- ADD IMAGE: image19 equivalent - Select OpenAPI connector -->)
+    <!-- ADD IMAGE: image19 - Select OpenAPI connector -->
 
 2. Set the tool name to `process_cart`.
 
@@ -43,7 +45,9 @@ This tool connects to the Cloud Run cart service and handles all cart operations
 
 4. Navigate to **GCP Console → Cloud Run → Services**, then click **cart-agent** to copy its URL.
 
-    ![Copy Cloud Run cart-agent URL](assets/<!-- ADD IMAGE: image21 equivalent - Cloud Run cart-agent service -->)
+    ![Select the cart-agent url](assets/select-cart-agent-url.png)
+
+    ![Add the cart-agent url](assets/add-cart-agent-url.png)
 
 5. Paste the URL into the YAML below, replacing `<ENTER URL HERE>`, then copy the entire YAML into the editor:
 
@@ -127,6 +131,7 @@ This tool connects to the Cloud Run cart service and handles all cart operations
         get:
           operationId: getCustomerInfo
           summary: Look up the customer's name, phone, and delivery location for this session.
+          description: Returns the form data linked to this session, if available.
           parameters:
             - name: sessionId
               in: path
@@ -159,6 +164,7 @@ This tool connects to the Cloud Run cart service and handles all cart operations
         get:
           operationId: getCartTotal
           summary: Retrieve the customer's current cart contents and subtotal.
+          description: Returns all items currently in the cart and the running subtotal in KES.
           parameters:
             - name: sessionId
               in: path
@@ -200,6 +206,7 @@ This tool connects to the Cloud Run cart service and handles all cart operations
         post:
           operationId: initiateCheckout
           summary: Initiate payment for the customer's current cart via Pesapal.
+          description: Uses the real cart subtotal for record-keeping, but the actual charged amount is a fixed demo value configured server-side.
           parameters:
             - name: sessionId
               in: query
@@ -262,6 +269,7 @@ This tool connects to the Cloud Run cart service and handles all cart operations
         get:
           operationId: getCartSummary
           summary: Retrieve a concise conversational summary of the cart.
+          description: Returns a pre-formatted string summarizing the cart contents and subtotal for the AI to speak directly.
           parameters:
             - name: sessionId
               in: path
@@ -305,7 +313,9 @@ This tool connects to the Cloud Run cart service and handles all cart operations
 
 6. Verify the server URL matches the cart-agent service URL, then click **Create**.
 
-    ![process_cart tool successfully generated](assets/create-process-cart.png)
+    ![process_cart tool created](assets/create-process-cart.png)
+
+    <!-- ADD IMAGE: image24 - process_cart tool successfully generated -->
 
 ---
 
@@ -313,7 +323,7 @@ This tool connects to the Cloud Run cart service and handles all cart operations
 
 This tool queries the vehicle parts catalogue and returns carousel-ready product records.
 
-1. Click **Add tool** again, select **OpenAPI**.
+1. Click **Add tool** again, then select the **OpenAPI** connector.
 2. Set the tool name to `search_parts`.
 3. Add the following description:
 
@@ -323,7 +333,7 @@ This tool queries the vehicle parts catalogue and returns carousel-ready product
 
 4. Navigate to **GCP Console → Cloud Run → Services**, click **search_parts** to copy its URL.
 
-    ![Select search-parts Cloud Run service](assets/select search-parts.png)
+    ![Select search-parts Cloud Run service](assets/select-search-parts.png)
 
 5. Switch to YAML and paste the following, replacing `<ENTER SEARCH_PARTS FUNCTION URL HERE>`:
 
@@ -397,7 +407,7 @@ This tool queries the vehicle parts catalogue and returns carousel-ready product
 
 6. Click **Create**.
 
-    ![search_parts tool final configuration](assets/search-parts yaml.png)
+    ![search_parts tool final configuration](assets/search-parts-yaml.png)
 
 ---
 
@@ -415,7 +425,7 @@ This tool queries the marketplace product catalogue.
 
 4. Navigate to **Cloud Run** and copy the URL for the **search_products** service.
 
-    ![Select search-product Cloud Run service](assets/select search-product.png)
+    ![Select search-product Cloud Run service](assets/select-search-product.png)
 
 5. Switch to YAML and paste the following, replacing `<ENTER SEARCH_PRODUCTS FUNCTION URL HERE>`:
 
@@ -489,7 +499,7 @@ This tool queries the marketplace product catalogue.
 
 6. Click **Create**.
 
-    ![search_products tool final configuration](assets/search-product config.png)
+    ![search_products tool final configuration](assets/search-product-config.png)
 
 ---
 
@@ -509,33 +519,39 @@ This tool gives the Finance Agent access to financial instruments data stored in
 
 4. Select **BigQuery** as the data source.
 
-    ![Select BigQuery as data source](assets/add bigquery.png)
+    ![Select BigQuery as data source](assets/add-bigquery.png)
 
 5. Select **BigQuery table with own schema** and **One time ingestion**.
 
 6. Click **Browse** to select the table.
 
-    ![Browse for BigQuery table](assets/browse table.png)
+    ![Browse for BigQuery table](assets/browse-table.png)
 
 7. Search for `cloud_mastery`, select **`table_finance`**, then click **Select**.
 
-    ![Select table_finance from cloud_mastery](assets/select table-finance.png)
+    ![Select table_finance from cloud_mastery](assets/select-table-finance.png)
 
 8. Verify the configuration and click **Continue**.
 
-    ![Verify datastore configuration](assets/datastore configuration.png)
+    ![Verify datastore configuration](assets/datastore-configuration.png)
 
 9. Confirm the datastore location is **US (United States)**, set the name to `table_finance`, then click **Continue**.
 
-    ![Datastore schema view](assets/datastore schema.png)
+    ![Datastore schema view](assets/datastore-schema.png)
 
 10. Select **General Pricing**, then click **Create**.
 
-    ![Select General Pricing](assets/datastore pricing.png)
+    ![Select General Pricing](assets/datastore-pricing.png)
 
-11. Once processing is complete, the new datastore will be available in the configuration panel. Click **Create** to finish.
+11. Once processing is complete, return to the previous page. The new datastore will be available in the configuration panel. Add the following description:
 
-    ![Finance datastore final config](assets/finance datastore final config.png)
+    ```
+    Executes data store queries to provide responses for customer queries regarding financial products
+    ```
+
+    Then click **Create**.
+
+    ![Finance datastore final config](assets/finance-datastore-final-config.png)
 
 !!! note
     Datastore indexing may take a few minutes. You can continue with the next tools while it processes.
@@ -548,7 +564,7 @@ This tool supplements the finance datastore with live web results from trusted K
 
 1. Click **Add tool**, then select **Google Search**.
 
-    ![Click Google Search tool type](assets/click google search.png)
+    ![Click Google Search tool type](assets/click-google-search.png)
 
 2. Set the name to `lookup_finance`.
 
@@ -568,7 +584,7 @@ This tool supplements the finance datastore with live web results from trusted K
 
 5. Confirm the setup looks correct, then click **Create**.
 
-    ![lookup_finance Google Search tool configuration](assets/lookup-finsearch config.png)
+    ![lookup_finance Google Search tool configuration](assets/lookup-finsearch-config.png)
 
 ---
 
@@ -586,7 +602,7 @@ This widget displays product cards visually inside the chat interface for both t
 
 3. Select **product_carousel**.
 
-    ![Select product_carousel widget type](assets/select product-carousel.png)
+    ![Select product_carousel widget type](assets/select-product-carousel.png)
 
 4. Set the name to `product_carousel` and add the following description:
 
@@ -596,11 +612,13 @@ This widget displays product cards visually inside the chat interface for both t
 
 5. Click **Create**.
 
-    ![Save product_carousel widget](assets/save product-carousel.png)
+    ![Save product_carousel widget](assets/save-product-carousel.png)
+
+    ![product_carousel widget added](assets/add-product-carousel.png)
 
 ---
 
-!!! success "Phase 2B Complete"
+!!! success "Step 3 Complete"
     All six tools are now created. In the next step, you will connect these tools to the agents and add the detailed XML instructions that govern each agent's behaviour.
 
 ---
@@ -616,3 +634,4 @@ This widget displays product cards visually inside the chat interface for both t
     <a href="../sokoai-agent-instructions/" class="btn-primary">Next: Agent Instructions →</a>
   </div>
 </div>
+ste

@@ -11,7 +11,7 @@ Follow these steps to set up a local development environment.
 ### ✅ Prerequisites
 
 Before you begin, ensure you have the following installed on your system:
-* **Python** (version 3.8 or higher)
+* **Python** (version 3.10 or higher)
 * **Git**
 
 ---
@@ -24,10 +24,10 @@ Before you begin, ensure you have the following installed on your system:
 
     ```bash
     # HTTPS
-    git clone [https://github.com/Pawa-IT-Solutions/cloud-mastery-docs.git](https://github.com/Pawa-IT-Solutions/cloud-mastery-docs.git)
+    git clone [https://github.com/Pawa-IT-Solutions/cloud-mastery-docs-2026.git](https://github.com/Pawa-IT-Solutions/cloud-mastery-docs-2026.git)
 
     # SSH
-    git clone git@github.com:Pawa-IT-Solutions/cloud-mastery-docs.git
+    git clone git@github.com:Pawa-IT-Solutions/cloud-mastery-docs-2026.git
     ```
     Then, navigate into the project directory:
     ```bash
