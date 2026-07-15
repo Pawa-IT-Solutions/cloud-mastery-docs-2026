@@ -1,93 +1,105 @@
-#  Prepare GitHub Environment
-For this lab, we will work with two application repositories: `cloud-mastery-backend` and `cloud-mastery-frontend`. First, we need to set up your GitHub account and configure it to work with your Google Cloud Shell environment.
+# Setup GitHub — Fork & Clone
 
-**Do you have a GitHub Account?**
-
-If you already have a GitHub account, you can skip directly to the next section: **Setup Backend Repository**
+In this section you will fork the Cloud Mastery 2026 repository to your GitHub account, clone it to your local machine, and open it in your IDE.
 
 ---
 
-### Step 1: Create or Login to an existing GitHub Account
+## Step 1: Fork the Repository
 
-1.  Navigate to the GitHub signup page: [github.com/signup](https://github.com/signup).
+Forking creates a personal copy of the project under your own GitHub account. This lets you make changes without affecting the original codebase. The repo contains both the backend and frontend applications you will be deploying.
 
-2.  Fill in your details (email, password, username) to create your account.
+1. Navigate to the source repository:
+   [https://github.com/Pawa-IT-Solutions/cloud-mastery-ecommerce-2026](https://github.com/Pawa-IT-Solutions/cloud-mastery-ecommerce-2026)
 
-    ![GitHub Signup Page](assets/images/github_signup_page.png)
+2. Locate the **Fork** button at the top-right of the page (next to the Star button). Click the dropdown and select **Create a new fork**.
 
-3.  Complete the "Verify your account" puzzle to prove you're human.
+    ![Click the Fork button](assets/images/click-github-fork.png)
 
-    ![GitHub Account Verification Puzzle](assets/images/github_verify_account.png)
+3. On the **Create a new fork** page configure the following:
 
-4.  GitHub will send a verification code to your email address. Enter this code to confirm your email.
+    | Field | Value |
+    |---|---|
+    | Owner | Your personal GitHub username (e.g., `eddie582`) |
+    | Repository Name | `cloud-mastery-ecommerce-2026` |
+    | Copy the main branch only | ✅ Keep checked |
 
-    ![Confirm Your Email Address](assets/images/github_confirm_email.png)
+4. Click the green **Create fork** button.
 
-5.  Once verified, proceed to sign in. Your new GitHub account is now ready!
+    ![Create the new fork](assets/images/click-create-fork.png)
 
-    ![New GitHub Account Dashboard](assets/images/github_dashboard_ready.png)
-
----
-
-### Step 2: Setup SSH Key from Cloud Shell
-
-To securely clone the repository to your Cloud Shell, you need to add your Cloud Shell's SSH key to your GitHub account.
-
-In the context of GitHub, public and private keys are used for secure authentication, primarily through SSH. The private key is kept secret on your local machine, while the corresponding public key is shared with GitHub. This allows GitHub to verify your identity when you perform actions like pushing to or pulling from a repository. 
-
-1.  Navigate back to your **Google Cloud Shell** tab.
-
-2.  Run the `ssh-keygen` command to generate a new SSH key. Press `Enter` three times to accept the default file location and create a key without a passphrase.
-
-    ```
-    ssh-keygen
-    ```
-    ![Generate SSH Key in Cloud Shell](assets/images/cloudshell_ssh_keygen.png)
-
-3.  Verify that the public key file (`id_ed25519.pub`) was created.
-
-    ```
-    ls -l .ssh/
-    ```
-    ![List SSH Key Files](assets/images/cloudshell_list_ssh_keys.png)
-
-4.  Display the public key and copy its entire content to your clipboard.
-
-    ```
-    cat .ssh/id_ed25519.pub
-    ```
-    ![Display and Copy Public Key](assets/images/cloudshell_cat_public_key.png)
-
-5.  Head back to your **GitHub** tab. Click on your profile icon in the top-right corner and select **Settings**.
-
-    ![Navigate to GitHub Profile](assets/images/github_profile_settings.png)
-    ![Select GitHub Settings](assets/images/github_click_settings.png)
-
-6.  In the left navigation menu, click on **SSH and GPG keys**.
-
-    ![SSH and GPG Keys Menu](assets/images/github_ssh_keys_menu.png)
-
-7.  Click **New SSH key**. Give it a descriptive **Title** (e.g., "Google Cloud Shell") and paste the copied key into the **Key** field. Click **Add SSH key**.
-
-    ![Add New SSH Key to GitHub](assets/images/github_add_new_ssh_key_page.png)
+    After a moment you will be redirected to your own copy. The top-left should now read `your-username/cloud-mastery-ecommerce-2026`.
 
 ---
 
-## Next Steps
+## Step 2: Clone the Repository
 
-**Github setup is complete!** You can now proceed to the next step, where we will fork and clone backend repo.
+Now download the forked repository to your local machine.
+
+1. On your forked repository page, click the green **<> Code** button and copy the **HTTPS** or **SSH** URL.
+
+    ![Copy the repository clone URL](assets/images/copy-repository.png)
+
+2. Open your terminal or command prompt and run the following command. Replace the URL with the one you copied from your fork:
+
+    ```shell
+    git clone https://github.com/[YOUR_USERNAME]/cloud-mastery-ecommerce-2026
+    ```
+
+    ![Cloning the repository](assets/images/click-clone-repository.png)
+
+3. Once the clone finishes, navigate into the project directory:
+
+    ```shell
+    cd cloud-mastery-ecommerce-2026
+    ```
+
+    ![Cloned repository ready](assets/images/cloud-mastery-cloned-repo.png)
 
 ---
+
+## Step 3: Open the Project in Your IDE
+
+Open the `cloud-mastery-ecommerce-2026` folder in your preferred IDE — VS Code or Antigravity IDE.
+
+=== "VS Code"
+
+    ```shell
+    code cloud-mastery-ecommerce-2026
+    ```
+
+=== "Antigravity IDE"
+
+    Open the Antigravity IDE, then use **File → Open Folder** and select the `cloud-mastery-ecommerce-2026` directory.
+
+!!! note
+    The repository contains both the `/backend` (NestJS) and `/frontend` (Next.js) applications, as well as the `setup-github-wif.sh` script you will use in the next section.
+
+---
+
+## Step 4: Note Your GitHub Repository Identifier
+
+You will need this value when setting up Workload Identity Federation in the next section:
+
+```shell
+GITHUB_REPO = [YOUR_USERNAME]/cloud-mastery-ecommerce-2026
+```
+
+---
+
+## What's Next
+
+Repository is ready. In the next section you will set up Workload Identity Federation and configure the GitHub Actions secrets that power the CI/CD pipeline.
+
+---
+
 <div class="page-nav">
   <div class="nav-item">
-    <a href="../setup-cloud-sql/" class="btn-secondary">← Previous: Database Setup</a>
+    <a href="../setup-cloud-sql/" class="btn-secondary">← Previous: Setup Cloud SQL</a>
   </div>
   <div class="nav-item">
-    <span><strong>Section 14</strong> -  Github Setup </span>
+    <span><strong>Setup GitHub</strong></span>
   </div>
   <div class="nav-item">
-    <a href="../setup-backend-repository" class="btn-primary">Next: Setup Backend Repo →</a>
+    <a href="../setup-backend-pipeline" class="btn-primary">Next: CI/CD Pipeline Setup →</a>
   </div>
 </div>
-
----

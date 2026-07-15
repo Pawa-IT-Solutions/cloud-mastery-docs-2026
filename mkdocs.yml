@@ -68,12 +68,10 @@ nav:
       - "Cloud Mastery Training Introduction": introduction.md
   - "Automate Securely":
       - "DevOps & CI/CD on GCP Lab": devops/devops-lab.md
-      - "Database setup": devops/setup-cloud-sql.md
-      - "Github setup": devops/setup-github.md
-      - "Setup Backend Repository": devops/setup-backend-repository.md
-      - "Setup Backend Pipeline": devops/setup-backend-pipeline.md
-      - "Setup Frontend Repository": devops/setup-frontend-repository.md
-      - "Setup Cloud Build for Frontend": devops/setup-frontend-pipeline.md
+      - "Setup Cloud SQL": devops/setup-cloud-sql.md
+      - "Setup GitHub": devops/setup-github.md
+      - "CI/CD Pipeline Setup": devops/setup-backend-pipeline.md
+      - "Trigger the Pipeline": devops/setup-frontend-pipeline.md
       - "Access the Application": devops/accessing-the-application.md
   - "Build Your Agent":
       - "Overview": virtual-agent/sokoai-lab.md

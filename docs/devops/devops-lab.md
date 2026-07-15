@@ -1,76 +1,120 @@
-#  Automate Securely: DevOps & CI/CD on GCP Lab
-## Overview
-Learn DevOps on GCP for automated app updates (CI/CD) and security by building a pipeline and covering GCP security basics.
+# Cloud Mastery: Pawa-ring AI-Powered Apps
 
-## What You'll Learn
+## Session Overview
 
-- Using Cloud Shell to access git repos and edit code
-- Setup SSH keys and add public key to Github
-- Configuring databases via Cloud SQL
-- Setting up CI/CD pipelines with Google Cloud Build
-- Pushing docker images to Google Artifact Registry
-- Securely injecting application secrets
-- Deploying containerized applications to serverless environments
-- Embracing Devops Best Practices
-- Securing your application within GCP
+This session focuses on setting up the core, secure infrastructure for an AI-powered e-commerce application. You will connect a NestJS backend to a Cloud SQL (MySQL) database, establish robust CI/CD pipelines using Workload Identity Federation and GitHub Actions for deployment to Cloud Run, and set up a foundation for data replication to BigQuery for advanced AI/ML analytics with Vertex AI.
 
-## Prerequisites
+### What You'll Learn
 
-- Active Google account
-- Basic understanding of cloud computing concepts
-- Basic Linux knowledge
-- Basic Git knowledge
+- Connect a NestJS backend to a Cloud SQL (MySQL) database
+- Build the core AI API routes
+- Establish separate and secure CI/CD pipelines using GitHub Actions and Workload Identity Federation
+- Deploy containerised applications to Cloud Run
+- Replicate data to BigQuery for analytics and AI/ML
 
-### Step 1: Activate Cloud Shell
-Cloud Shell provides a command-line environment directly in your browser, with the `gcloud` SDK and other utilities pre-installed.
+### Core Technologies
 
-1.  Open the Cloud Shell by clicking on the **Activate Cloud Shell** icon in the top-right corner of the console, as highlighted below.
-
-    ![Activate Cloud Shell Icon](assets/images/cloudshell.png)
-
-2.  A new frame will open at the bottom of your window. Click **Continue** to proceed.
-
-    ![Click Continue for Cloud Shell](assets/images/cloud_shell_continue.png)
-
-3.  You will be prompted to grant Cloud Shell permission to use your account credentials to make API calls to Google Cloud. Click **Authorize**.
-
-    ![Authorize Cloud Shell](assets/images/cloud_shell_authorize.png)
-
-4.  On some occasions, you may be asked to re-enter your password to continue.
-
-    ![Re-authenticate for Cloud Shell](assets/images/gcp_reauth_password.png)
-
-### Step 2: Open Cloud Shell in a New Tab
-
-For a better experience, we will open the Cloud Shell in its own dedicated browser tab.
-
-1.  When the provisioning is complete, your Cloud Shell terminal is ready.
-
-    ![Cloud Shell Terminal Ready](assets/images/cloud_shell_terminal_ready.png)
-
-2.  Click the **Open in new window** button to launch the Cloud Shell in a new tab.
-
-    ![Open in New Window](assets/images/cloud_shell_open_in_new_window.png)
-
-3.  The Cloud Shell will now be open in a new, full-screen browser tab. You may be asked to **Authorize** again.
-
-    ![Cloud Shell in New Tab](assets/images/cloud_shell_new_tab.png)
+| Category | Technology |
+|---|---|
+| IDE | VS Code or Antigravity IDE |
+| Backend | NestJS (Node.js Framework) |
+| Frontend | Next.js |
+| Database | Cloud SQL for MySQL |
+| Data Warehouse | BigQuery |
+| AI/ML | Vertex AI — Gemini Models, Agent Builder, BigQuery ML |
+| Deployment | Cloud Run with GitHub Actions & Workload Identity Federation |
 
 ---
 
-## Next Steps
+## Resources Already Allocated for You
 
-**You are now ready for the next section!** Your Google Cloud environment is prepared, and your Cloud Shell is active. In the next section, we will set up the Cloud SQL database.
+Your Google Workspace email and password have been shared with you at the email address you registered with for this event. These credentials give you access to a dedicated GCP project named after you.
 
 ---
+
+## Step 1: Login to GCP
+
+1. Open the Google Cloud Console: [https://console.cloud.google.com](https://console.cloud.google.com)
+
+2. Sign in with the designated email shared with you. On successful login you will see a project with your name on it.
+
+    ![GCP project landing page](assets/images/Initial-project-landingpage.png)
+
+3. Confirm you can access your Google Cloud project. The project will be named according to your name — for example, `eddie-ngugi-3a56`.
+
+---
+
+## Step 2: Login to GitHub
+
+1. Navigate to [https://github.com](https://github.com) and select the **Sign in with Google** option if your account is linked to your Google account.
+
+2. Select your work or personal email (e.g., `eddie@training.cloudpartner.africa`).
+
+3. Click **Continue** to authorise GitHub to access your basic profile information.
+
+    ![Sign in to GitHub with Google](assets/images/google-signin.png)
+
+---
+
+## Step 3: Set Up the gcloud CLI
+
+The gcloud CLI lets you run GCP commands from your local machine. If you haven't installed it yet, follow the official guide:
+[https://docs.cloud.google.com/sdk/docs/install-sdk](https://docs.cloud.google.com/sdk/docs/install-sdk)
+
+### 3.1 — Run gcloud init
+
+Once installed, run the following command in your terminal or command prompt:
+
+```shell
+gcloud init
+```
+
+A browser window will open. Sign in with the Google account you were given and click **Allow**.
+
+![gcloud init running](assets/images/gcloud-init.png)
+
+### 3.2 — Set the Default Zone
+
+When prompted to set a default zone, **enter `1`** to select "Do not set default zone".
+
+![Select default zone — enter 1](assets/images/select-defaultzone.png)
+
+### 3.3 — Set the Default Region
+
+When prompted for a default region, **enter `36`** to select `us-central1`.
+
+![Select default region — enter 36](assets/images/select-default-region.png)
+
+### Essential gcloud Commands
+
+Once logged in, these are the core commands you will use throughout the lab:
+
+| Command | What it does |
+|---|---|
+| `gcloud auth login` | Forces a new browser login — useful if your session expires or you need to switch accounts |
+| `gcloud projects list` | Shows all cloud projects attached to your account |
+| `gcloud config set project [PROJECT_ID]` | Switches your active terminal session to a different project |
+| `gcloud info` | Displays your current environment details, active account, and current project |
+
+!!! tip
+    Add `--help` to the end of any command (e.g., `gcloud projects --help`) to get the built-in manual for that command.
+
+---
+
+## What's Next
+
+You are now logged in to GCP and GitHub with your gcloud CLI initialised. In the next section you will create and configure the Cloud SQL database.
+
+---
+
 <div class="page-nav">
   <div class="nav-item">
     <a href="/migration/migration-dns-update/" class="btn-secondary">← Previous: GCP Migration Lab</a>
   </div>
   <div class="nav-item">
-    <span><strong>Section 12</strong> -  DevOps Lab </span>
+    <span><strong>DevOps Lab</strong></span>
   </div>
   <div class="nav-item">
-    <a href="../setup-cloud-sql" class="btn-primary">Next: Database Setup →</a>
+    <a href="../setup-cloud-sql" class="btn-primary">Next: Setup Cloud SQL →</a>
   </div>
 </div>

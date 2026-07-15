@@ -1,60 +1,177 @@
-# Setup Database in Cloud SQL
+# Setup Cloud SQL
 
-Next, we need to set up the database to ensure all the necessary data is populated for our application. We will do this by importing a pre-configured SQL file into our Cloud SQL instance.
-
-### Step 1: Navigate to Cloud SQL
-
-1.  Navigate to the Cloud SQL instances page by searching for "Cloud SQL" in the top search bar or by using this direct link:
-    [https://console.cloud.google.com/sql/instances](https://console.cloud.google.com/sql/instances)
-
-2.  You should see that a Cloud SQL instance has already been provisioned for you.
-
-    ![Cloud SQL Instances List](assets/images/sql_instances_list.png)
-
-### Step 2: Import the Database
-
-1.  Click on the **Instance ID** to open the instance details page.
-
-2.  At the top of the page, click the **IMPORT** button.
-
-    ![Click Import on Instance Details Page](assets/images/sql_instance_details_import.png)
-
-3.  On the "Import data" screen, under the **Select source file** section, click **BROWSE**.
-
-    ![Browse for SQL file](assets/images/sql_import_browse.png)
-
-4.  A popup window will appear showing your Cloud Storage buckets. Double-click on the bucket name that ends with `-cloud-mastery`.
-
-    ![Select the cloud-mastery bucket](assets/images/sql_import_select_bucket.png)
-
-5.  Select the `cloud_mastery.sql` file and click the **SELECT** button at the bottom.
-
-    ![Select the cloud_mastery.sql file](assets/images/sql_import_select_file.png)
-
-6.  Finally, under the **Destination** section, expand the **Database** dropdown and select `cloud_mastery`.
-
-    ![Select the cloud_mastery database](assets/images/sql_import_select_database.png)
-
-7.  Click the **IMPORT** button to start the process. The import will begin, and you will be returned to the instance details page.
+In this section you will create a Cloud SQL (MySQL) database instance, add a user, seed it with sample data from the repository's SQL dump file, and copy the connection details you will need later.
 
 ---
 
-## Next Steps
+## Step 1: Enable the Cloud SQL API
 
-**Database setup is complete!** You can now proceed to the next step, where we will prepare our GitHub environment.
+1. Navigate to Cloud SQL: [https://console.cloud.google.com/sql/instances](https://console.cloud.google.com/sql/instances)
+
+2. If prompted, click **Enable** to activate the Cloud SQL Admin API.
+
+    ![Enable Cloud SQL API](assets/images/enable-mysql-apis.png)
 
 ---
+
+## Step 2: Create the Instance
+
+1. Click **Create instance**.
+
+    ![Create Cloud SQL instance](assets/images/setup-database.png)
+
+2. Choose **MySQL** as the database engine.
+
+3. If prompted to enable the Compute Engine API, click **Enable**.
+
+    ![Enable Compute Engine API](assets/images/enable-billing.png)
+
+4. Configure the instance with these settings:
+
+    | Setting | Value |
+    |---|---|
+    | Edition | Enterprise |
+    | Edition preset | Sandbox |
+    | Database version | MySQL 8.4 |
+    | Instance ID | `cloud-mastery-db-v8` |
+    | Root password | Set a password and note it down |
+    | Region | `us-central1` |
+    | Zonal availability | Single zone |
+
+5. Click **Create instance** to begin provisioning (this takes a few minutes).
+
+6. Once complete you will see your running instance in the list.
+
+    ![Created database instance](assets/images/created-database.png)
+
+---
+
+## Step 3: Add a Database User
+
+1. In the left sidebar of your Cloud SQL instance, click **Users**, then click **Add user account**.
+
+2. In the side panel that opens, select **Built-in Authentication** and fill in:
+
+    | Field | Value |
+    |---|---|
+    | Username | `Cloud_Mastery1` |
+    | Password | `Cloud_Mastery2` |
+
+3. Click **Add** to save.
+
+---
+
+## Step 4: Create a Cloud Storage Bucket for the SQL Dump
+
+You will upload the SQL seed file to Cloud Storage so that Cloud SQL can import it.
+
+1. In your instance's overview page click **Import data**, then click **Browse** under Select source file.
+
+2. In the file browser, click the **Create bucket** icon in the top-right corner.
+
+    ![Browse Cloud Storage](assets/images/browse-cloudstorage.png)
+
+3. Give the bucket a unique name (e.g., `cloud-mastery-pawait`) and select region `us-central1`.
+
+    ![Select create bucket](assets/images/select-createbucket.png)
+
+4. Before finalising, **uncheck** "Enforce public access prevention on this bucket" so Cloud SQL can read from it.
+
+5. Click **Create**.
+
+    ![Created storage bucket](assets/images/created-storage-bucket.png)
+
+---
+
+## Step 5: Upload the SQL Dump File
+
+1. Navigate to **Cloud Storage → Buckets** and open the bucket you just created.
+
+    ![Select Cloud Storage](assets/images/select-cloudstorage.png)
+
+2. Click **Upload → Choose files** and locate the SQL dump from the cloned repository:
+
+    ```
+    cloud-mastery-ecommerce-2026/backend/prisma/sql-dump.sql
+    ```
+
+    ![SQL seed dump path in the repo](assets/images/seed-dump-path.png)
+
+3. Select the file and confirm the upload. You will see `sql-dump.sql` appear in the bucket.
+
+    ![SQL file visible in bucket](assets/images/select-sqlseed.png)
+
+---
+
+## Step 6: Import the SQL Dump into Cloud SQL
+
+1. Go back to your Cloud SQL instance and click **Import data**.
+
+2. Under **Source**, set the file type to **SQL**, click **Browse**, and select the `sql-dump.sql` file from your bucket.
+
+3. Under **Destination**, expand the **Database** dropdown and select `cloud_mastery_sample`.
+
+4. Click **Import** to start. You will be returned to the instance overview while the import runs.
+
+---
+
+## Step 7: Verify the Database
+
+Once the import completes you can confirm the tables were created using Cloud SQL Studio.
+
+1. In your instance details, click **Cloud SQL Studio**.
+
+    ![Select Cloud SQL Studio](assets/images/select-cloudsqlstudio.png)
+
+2. Select the `cloud_mastery_sample` database, enter your username (`Cloud_Mastery1`) and password (`Cloud_Mastery2`), and click **Authenticate**.
+
+    ![Login to database](assets/images/Login-Database.png)
+
+3. You should see the imported tables in the schema panel.
+
+    ![Deployed database with tables](assets/images/deployed-database.png)
+
+---
+
+## Step 8: Copy the Connection Details
+
+You will need these four values when configuring GitHub secrets in a later step.
+
+1. In your instance's **Overview** page, scroll down to **Connect to this instance** and copy the **Connection name**:
+
+    ```
+    [PROJECT_ID]:us-central1:cloud-mastery-db-v8
+    ```
+
+    ![Copy database connection name](assets/images/copy-database-instance-name.png)
+
+2. Under the **Databases** tab, confirm the database name is `cloud_mastery_sample`.
+
+3. Keep a record of all four required parameters:
+
+```shell
+DB_NAME = cloud_mastery_sample
+DB_PASS = Cloud_Mastery2
+DB_USER = Cloud_Mastery1
+CLOUDSQL_INSTANCE_CONNECTION_NAME = [PROJECT_ID]:us-central1:cloud-mastery-db-v8
+```
+
+---
+
+## What's Next
+
+Database setup is complete. In the next section you will fork and clone the application repository.
+
+---
+
 <div class="page-nav">
   <div class="nav-item">
     <a href="../devops-lab/" class="btn-secondary">← Previous: DevOps Lab</a>
   </div>
   <div class="nav-item">
-    <span><strong>Section 13</strong> -  Database Setup </span>
+    <span><strong>Setup Cloud SQL</strong></span>
   </div>
   <div class="nav-item">
-    <a href="../setup-github" class="btn-primary">Next: Setup Github →</a>
+    <a href="../setup-github" class="btn-primary">Next: Setup GitHub →</a>
   </div>
 </div>
-
----
-

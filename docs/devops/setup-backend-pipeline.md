@@ -1,145 +1,259 @@
-# Automating Backend Deployments with Cloud Build
+# Setup CI/CD Pipeline — Workload Identity Federation & GitHub Secrets
 
-In this section, we'll harness the power of Google Cloud Build to create a Continuous Integration (CI) pipeline. This is a crucial step in modern software development.
-
-Once configured, this pipeline will automatically build and deploy our backend application to Cloud Run every time we push new code to our GitHub repository. No more manual deployments!
+In this section you will establish a secure, keyless connection between your GCP project and GitHub using Workload Identity Federation, then configure the GitHub Actions secrets that power the automated deployment pipeline.
 
 ---
 
-### Step 1: Create a Cloud Build Trigger
-Let's start by creating the trigger that will listen for changes in our repository.
+## What is Workload Identity Federation?
 
-1.  In the Google Cloud Console, use the top search bar to find `Cloud Build`, then select **Triggers** from the results.
-    ![Search for Cloud Build](assets/images/cloud_build_search.png)
+Workload Identity Federation is a secure method for granting external identities (like GitHub Actions) temporary access to Google Cloud resources **without using long-lived service account keys**. It works by having Google Cloud trust an external identity provider (GitHub) and map the external identity's token to a specific GCP Service Account. This eliminates the security risk of storing static keys, ensuring a keyless CI/CD pipeline for deploying to Cloud Run.
 
-2.  On the **Triggers** page, click **Create trigger**.
-    ![Cloud Build Triggers Page](assets/images/cloud_build_triggers_page.png)
+---
 
-### Step 2: Configure the Trigger
+## Before You Start — Gather Your Variables
 
-Now, we'll configure the trigger to connect to our specific GitHub repository and run our deployment instructions.
+You need three values from your GCP project. Find them on the GCP Welcome page:
+[https://console.cloud.google.com/welcome](https://console.cloud.google.com/welcome)
 
-1.  **Name**: Give your trigger a descriptive name, like `cloud-mastery-backend-deploy`.
-2.  **Region**: Select `us-central1 (Iowa)`.
-3.  **Event**: Keep the default setting, `Push to a branch`.
-4.  **Source - Connect your GitHub repository**:
-    1.  Next to **Repository**, click **Connect new repository**.
-        ![Connect New Repository](assets/images/cloud_build_connect_repo.png)
-    2.  Select **GitHub (Cloud Build GitHub App)** and click **Continue**.
-    3.  Authorize the Google Cloud Build app to access your GitHub account.
-        ![Authorize GitHub Connection](assets/images/cloud_build_authorize_github.png)
-    4.  On the GitHub installation page, select **All repositories** and click **Install**. This grants Cloud Build permission to see your repositories.
-        ![Install Google Cloud Build GitHub App](assets/images/cloud_build_install_github_app.png)
-    5.  Back in the Cloud Build console, select your forked `your-github-username/cloud-mastery-backend` repository from the dropdown.
-    6.  Check the consent box and click **Connect**.
-        ![Select Repository for Trigger](assets/images/cloud_build_select_repo.png)
-5.  **Source - Branch**: In the **Branch** field, enter `^master$`.
+| Variable | Where to find it |
+|---|---|
+| `PROJECT_ID` | GCP Welcome page — Project ID field |
+| `PROJECT_NUMBER` | GCP Welcome page — Project number field |
+| `GITHUB_REPO` | `[YOUR_USERNAME]/cloud-mastery-ecommerce-2026` |
 
-    !!! info "What does `^master$` mean?"
-        This is a regular expression that ensures the trigger *only* runs for pushes made directly to the `master` branch, ignoring other branches.
+---
 
-6.  **Configuration - Build Configuration**:
-    *   **Type**: Select `Cloud Build configuration file (yaml or json)`.
-    *   **Location**: Leave the default `Repository` setting. The path `/cloudbuild.yaml` points to the deployment instructions file already in your repository.
-7.  **Advanced - Substitution Variables**:
-    *   We need to securely provide our database password to the build process. We'll do this using a substitution variable.
-    *   Click **Add variable**.
-        *   **Variable**: `_MYSQL_PRISMA_URL`
-        *   **Value**: This is the full connection string for your database. To build it:
-            1.  Open a **new browser tab** and navigate to the [Cloud SQL instances page](https://console.cloud.google.com/sql/instances).
-            2.  Copy the **Public IP address** of your `cloud-mastery-sql` instance.
-                ![Copy Cloud SQL Public IP Address](assets/images/sql_instance_public_ip.png)
-            3.  Construct the connection string using the format below.
+## Step 1: Open Cloud Shell
 
-    !!! warning "Action Required: Replace Placeholders"
-        You must replace the following placeholders in the string below:
-        *   `YOUR_PROJECT_ID`: Find this on your Google Cloud Console dashboard.
-        *   `YOUR_INSTANCE_PUBLIC_IP`: The public IP address you just copied.
+1. In the GCP Console, click the **Activate Cloud Shell** icon in the top-right toolbar.
 
-    ````
-    mysql://student:YOUR_PROJECT_ID@YOUR_INSTANCE_PUBLIC_IP:3306/cloud_mastery?sslmode=require
-    ````
-    *   Paste your completed and correct string into the **Value** field.
-        ![Add Substitution Variables](assets/images/cloud_build_substitution_variables.png)
+    ![Activate Cloud Shell](assets/images/activate-cloudshell.png)
 
-8.  **Advanced - Service Account**:
-    *   Scroll down to the **Service Account** dropdown.
-    *   Select the service account that starts with `cloud-mastery-`. This special service account has the necessary permissions (like deploying to Cloud Run) to execute our pipeline.
-        ![Select Service Account](assets/images/cloud_build_select_service_account.png)
+2. Click **Authorize** on the pop-up screen if prompted.
 
-9.  Click the **Create** button at the bottom of the page to save your trigger.
+    ![Cloud Shell ready](assets/images/opened-cloudshell.png)
 
-### Step 3: Trigger Your First Automated Deployment
+---
 
-To trigger our pipeline, we need to push a new commit to our GitHub repository. We'll make a small, cosmetic change to do this.
+## Step 2: Set Environment Variables
 
-1.  In your Cloud Shell, click the **Open Editor** (pencil) icon in the top-right.
-    ![Open Editor](assets/images/click-pencil-icon-open-editor.png)
-2.  The editor will open. In the left-hand navigation pane, click the **Explorer** (two pages) icon, then click the **Open Folder** button.
-    ![Select File icon](assets/images/select-file-after-opening-editor.png)
-    ![open folder](assets/images/click-open-folder.png)
-3.  A dialog will ask for confirmation. Click **OK** to open the `cloud-mastery-backend` project.
-    ![OK to open folder](assets/images/select-ok-open-folder.png)
-4.  In the explorer, click on the `README.md` file to open it for editing.
-    ![Select the readme file](assets/images/select-readme.png)
-5.  Make any small change to the file, like adding a new line or fixing a typo. The content of the change doesn't matter.
-6.  Now, return to the main Cloud Shell terminal (the black window at the bottom).
-7.  Execute the following commands one by one to set up your Git identity, commit the file, and push it to GitHub.
+=== "Cloud Shell / Linux / macOS"
 
-    !!! note "Use Your Training Git Identity"
-        Replace the placeholder email and name with the details provided for this training.
-
-    ```bash
-    # Ensure you are in the correct directory
-    cd ~/cloud-mastery-backend
-
-    # Configure your Git identity for this commit (one-time setup)
-    git config --global user.email "firstname.lastname1@train.pawait.co.ke"
-    git config --global user.name "First Name Last Name"
-
-    # Stage, commit, and push your change to trigger the build
-    git add .
-    git commit -m "Trigger initial Cloud Build deployment"
-    git push origin master
+    ```shell
+    export PROJECT_ID="[YOUR_PROJECT_ID]"
+    export GITHUB_REPO="[YOUR_USERNAME]/cloud-mastery-ecommerce-2026"
+    export PROJECT_NUMBER="[YOUR_PROJECT_NUMBER]"
     ```
-    Your push to the `master` branch is the event that our Cloud Build trigger is waiting for!
-    ![successful push to backend repo](assets/images/successful-push.png)
 
-### Step 4: Monitor the Build and Verify Deployment
+=== "Windows (Command Prompt)"
 
-1.  Return to the Google Cloud Console and navigate to the Cloud Build **History** page. You'll see your build kick off automatically, listed with a "Running" status. Click on it to view the live logs.
-    ![Cloud Build History](assets/images/cloud_build_history.png)
-    ![Cloud Build in Progress](assets/images/cloud_build_in_progress.png)
-
-2.  Patience is a virtue! The build process will take about 7 minutes to complete as it builds the container image and deploys it to Cloud Run. Once done, you'll see a green "Successful" status.
-    ![Cloud Build Successful](assets/images/cloud_build_success.png)
-
-3.  Let's see the result! Navigate to **Cloud Run** in the console (or use this direct link: [console.cloud.google.com/run](https://console.cloud.google.com/run)). You'll now see your `cloud-mastery-backend` service listed with a green checkmark, indicating it's deployed and healthy.
-    ![Cloud Run Backend Service](assets/images/cloud_run_backend.png)
+    ```shell
+    set PROJECT_ID="[YOUR_PROJECT_ID]"
+    set GITHUB_REPO="[YOUR_USERNAME]/cloud-mastery-ecommerce-2026"
+    set PROJECT_NUMBER="[YOUR_PROJECT_NUMBER]"
+    ```
 
 ---
 
-!!! success "Congratulations! Backend Automation Complete!"
-    You have successfully configured a professional Continuous Integration / Continuous Deployment (CI/CD) pipeline. From now on, every time you `git push` a change to the `master` branch, Cloud Build will automatically handle the deployment for you.
+## Step 3: Create the Workload Identity Pool
+
+A Pool is a container for your external identity providers.
+
+=== "Cloud Shell / Linux / macOS"
+
+    ```shell
+    gcloud iam workload-identity-pools create "github-pool-v1" \
+        --project="$PROJECT_ID" \
+        --location="global" \
+        --display-name="GitHub Pool V1"
+    ```
+
+=== "Windows (Command Prompt)"
+
+    ```shell
+    gcloud iam workload-identity-pools create "github-pool-v1" --project="%PROJECT_ID%" --location="global" --display-name="GitHub Pool V1"
+    ```
 
 ---
 
-## Next Steps
+## Step 4: Create the OIDC Provider
 
-**Great job!** Next, we will apply these same principles to our frontend application.
+This command tells Google Cloud to trust GitHub's identity tokens.
+
+!!! warning "Action Required"
+    Replace `'Pawa-IT-Solutions'` in the `--attribute-condition` flag below with **your own GitHub username**.
+
+=== "Cloud Shell / Linux / macOS"
+
+    ```shell
+    gcloud iam workload-identity-pools providers create-oidc "github-provider-v1" \
+        --project="$PROJECT_ID" \
+        --location="global" \
+        --workload-identity-pool="github-pool-v1" \
+        --display-name="GitHub Provider V1" \
+        --issuer-uri="https://token.actions.githubusercontent.com" \
+        --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository,attribute.actor=assertion.actor" \
+        --attribute-condition="assertion.repository_owner == '[YOUR_GITHUB_USERNAME]'"
+    ```
+
+=== "Windows (Command Prompt)"
+
+    ```shell
+    gcloud iam workload-identity-pools providers create-oidc "github-provider-v1" --project="%PROJECT_ID%" --location="global" --workload-identity-pool="github-pool-v1" --display-name="GitHub Provider V1" --issuer-uri="https://token.actions.githubusercontent.com" --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository,attribute.actor=assertion.actor" --attribute-condition="assertion.repository_owner == '[YOUR_GITHUB_USERNAME]'"
+    ```
 
 ---
+
+## Step 5: Bind GitHub to the Workload Identity Pool
+
+This allows GitHub to establish a connection with your GCP project.
+
+=== "Cloud Shell / Linux / macOS"
+
+    ```shell
+    gcloud iam service-accounts add-iam-policy-binding \
+        "github-deploy-sa@$PROJECT_ID.iam.gserviceaccount.com" \
+        --project="$PROJECT_ID" \
+        --role="roles/iam.serviceAccountTokenCreator" \
+        --member="principalSet://iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/github-pool-v1/attribute.repository/$GITHUB_REPO"
+    ```
+
+=== "Windows (Command Prompt)"
+
+    ```shell
+    gcloud iam service-accounts add-iam-policy-binding "github-deploy-sa@%PROJECT_ID%.iam.gserviceaccount.com" --project="%PROJECT_ID%" --role="roles/iam.serviceAccountTokenCreator" --member="principalSet://iam.googleapis.com/projects/%PROJECT_NUMBER%/locations/global/workloadIdentityPools/github-pool-v1/attribute.repository/%GITHUB_REPO%"
+    ```
+
+---
+
+## Step 6: Run the Setup Script
+
+The repository includes a helper script (`setup-github-wif.sh` / `setup-github-wif.bat`) that enables the required GCP APIs and configures IAM permissions for the `github-deploy-sa` service account.
+
+### Running from your local machine (Linux/macOS)
+
+1. Open `setup-github-wif.sh` in your IDE and edit the `GITHUB_OWNER` variable to match your GitHub username.
+
+    ![Edit GITHUB_OWNER in the script — Linux/macOS](assets/images/change-githubowner.png)
+
+2. Log in with the email you were given, then make the script executable and run it:
+
+    ```shell
+    gcloud auth application-default login
+    chmod +x setup-github-wif.sh
+    ./setup-github-wif.sh
+    ```
+
+### Running from Windows
+
+1. Open `setup-github-wif.bat` in your IDE and update the `GITHUB_OWNER` variable.
+
+    ![Edit GITHUB_OWNER in the script — Windows](assets/images/change-githubowner-windows.png)
+
+2. Run:
+
+    ```shell
+    setup-github-wif.bat
+    ```
+
+### Running from Cloud Shell
+
+1. Upload `setup-github-wif.sh` to Cloud Shell using the **Upload file** button.
+
+    ![Upload script to Cloud Shell](assets/images/cloudshell-upload.png)
+
+2. Make it executable and run it:
+
+    ```shell
+    chmod +x setup-github-wif.sh
+    ./setup-github-wif.sh
+    ```
+
+### Expected Output
+
+After a successful run you will see:
+
+```
+GCP_WORKLOAD_IDENTITY_PROVIDER: projects/[PROJECT_NUMBER]/locations/global/workloadIdentityPools/github-pool-v1/providers/github-provider-v1
+GCP_DEPLOYER_SERVICE_ACCOUNT_EMAIL: github-deploy-sa@[PROJECT_ID].iam.gserviceaccount.com
+```
+
+**Copy both values** — you will use them in the next step.
+
+---
+
+## Step 7: Confirm the Service Account
+
+In the GCP Console go to **IAM & Admin → Service Accounts** and confirm `github-deploy-sa` was created. Copy its email address.
+
+![github-deploy-sa service account](assets/images/service_acccount-mh.png)
+
+---
+
+## Step 8: Configure GitHub Actions Secrets
+
+GitHub Actions secrets let the pipeline access sensitive configuration without exposing values in source code.
+
+1. In your forked repository on GitHub, click the **Settings** tab.
+2. In the left navigation click **Secrets and variables → Actions**.
+
+    ![Open GitHub Actions Secrets](assets/images/open-github-secrets.png)
+
+3. Click **New repository secret** and add each secret below:
+
+    | Secret Name | Value |
+    |---|---|
+    | `GCP_PROJECT_ID` | Your GCP project ID |
+    | `GCP_REGION` | `us-central1` |
+    | `GCP_WORKLOAD_IDENTITY_PROVIDER` | `projects/[PROJECT_NUMBER]/locations/global/workloadIdentityPools/github-pool-v1/providers/github-provider-v1` |
+    | `GCP_DEPLOYER_SERVICE_ACCOUNT_EMAIL` | `github-deploy-sa@[PROJECT_ID].iam.gserviceaccount.com` |
+    | `CLOUD_RUN_BACKEND_SERVICE_NAME` | `soko-backend` |
+    | `CLOUD_RUN_FRONTEND_SERVICE_NAME` | `soko-frontend` |
+    | `CLOUDSQL_INSTANCE_CONNECTION_NAME` | Copied from the Cloud SQL step |
+    | `DB_NAME` | `cloud_mastery_sample` |
+    | `DB_USER` | `Cloud_Mastery1` |
+    | `DB_PASSWORD` | `Cloud_Mastery2` |
+    | `MYSQL_PRISMA_URL` | `mysql://Cloud_Mastery1:Cloud_Mastery2@localhost:3306/cloud_mastery_sample?socket=/cloudsql/[CLOUDSQL_INSTANCE_CONNECTION_NAME]` |
+    | `FRONTEND_NEXT_PUBLIC_CART_API_URL` | `https://checkout-service-[PROJECT_NUMBER].us-central1.run.app` |
+    | `FRONTEND_NEXT_PUBLIC_CHAT_DEPLOYMENT` | *(provided by trainer)* |
+    | `FRONTEND_NEXT_PUBLIC_CHAT_TITLE` | `SokoAI Agent` |
+    | `PESAPAL_CONSUMER_KEY` | *(provided by trainer)* |
+    | `PESAPAL_CONSUMER_SECRET` | *(provided by trainer)* |
+    | `PESAPAL_NOTIFICATION_ID` | *(provided by trainer)* |
+
+4. Once all secrets are added your Secrets page should look like this:
+
+    ![GitHub Actions secrets configured](assets/images/Gihub_Secrets.png)
+
+---
+
+## Step 9: Verify Secret Manager
+
+The setup script also creates a secret in GCP Secret Manager to store the database URL for Cloud Run.
+
+1. In the GCP Console search for **Secret Manager** and confirm a secret named `MYSQL_PRISMA_URL` was created.
+
+    The stored value format is:
+    ```
+    mysql://Cloud_Mastery1:Cloud_Mastery2@localhost:3306/cloud_mastery_sample?socket=/cloudsql/[CLOUDSQL_INSTANCE_CONNECTION_NAME]
+    ```
+
+---
+
+## What's Next
+
+You have set up a secure, keyless connection between GCP and GitHub and configured all deployment secrets. In the next section you will trigger the pipeline by pushing a commit.
+
+---
+
 <div class="page-nav">
   <div class="nav-item">
-    <a href="../setup-backend-repository/" class="btn-secondary">← Previous: Setup Backend Repository</a>
-
+    <a href="../setup-github/" class="btn-secondary">← Previous: Setup GitHub</a>
   </div>
   <div class="nav-item">
-    <span><strong>Section 16</strong> -  Setup Backend Pipeline </span>
+    <span><strong>CI/CD Pipeline Setup</strong></span>
   </div>
   <div class="nav-item">
-    <a href="../setup-frontend-repository" class="btn-primary">Next: Setup Frontend Repo →</a>
+    <a href="../setup-frontend-pipeline" class="btn-primary">Next: Trigger the Pipeline →</a>
   </div>
 </div>
----
-
