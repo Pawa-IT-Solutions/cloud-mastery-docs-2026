@@ -6,7 +6,9 @@ In this step, you will log into the CX Agent Studio, select your project, and cr
 
 ## Access Vertex AI Agent Builder
 
-1. Log in to the [CX Agent Studio console](https://ces.cloud.google.com) using your training GCP account from Session 1.
+1. Log in to the [CX Agent Studio console](https://ces.cloud.google.com) using your training GCP account from Session 1. Click Agree and Continue.
+
+    ![Final complete agent setup](assets/get-started-screen.png)
 
 2. You will see a page like this:
 

@@ -24,7 +24,7 @@ A configuration page opens. Complete the following settings:
 
 2. **Deployment version** — Click the existing deployment version shown, or click **Create a new version** if none exists.
 
-    ![Select deployment version](assets/agent deploy name + create.png)
+    ![Select deployment version](assets/agent-deploy-name-create.png)
 
 3. **Input method** — Switch the agent's input method to enable **Text input**.
 
