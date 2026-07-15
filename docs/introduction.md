@@ -45,6 +45,6 @@ Ready to transform your approach to cloud? Let's begin with the GCP Migration La
     <span>Introduction</span>
   </div>
   <div class="nav-item">
-    <a href="../migration/migration-overview" class="btn-primary">Next: GCP Migration Lab →</a>
+    <a href="/devops/devops-lab" class="btn-primary">Next: Automate Securely →</a>
   </div>
 </div>

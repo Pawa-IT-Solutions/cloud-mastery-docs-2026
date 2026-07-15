@@ -567,7 +567,7 @@ When all tools and instructions are connected, the complete agent setup should l
     <a href="../sokoai-tools/" class="btn-secondary">← Previous: Setting Up Tools</a>
   </div>
   <div class="nav-item">
-    <span><strong>Section 29</strong> - SokoAI: Agent Instructions</span>
+    <span><strong>SokoAI: Agent Instructions</strong></span>
   </div>
   <div class="nav-item">
     <a href="../sokoai-deployment/" class="btn-primary">Next: Deployment →</a>

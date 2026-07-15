@@ -37,7 +37,7 @@ In this step, you will log into the CX Agent Studio, select your project, and cr
 
 4. This opens the **Agent Builder** page where you will configure all components.
 
-    ![Final complete agent setup](assets/new-agent-landing-page.png)
+    ![Final complete agent setup](assets/agent-start-page.png)
 
 ---
 

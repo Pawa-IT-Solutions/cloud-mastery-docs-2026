@@ -109,7 +109,7 @@ You are now logged in to GCP and GitHub with your gcloud CLI initialised. In the
 
 <div class="page-nav">
   <div class="nav-item">
-    <a href="/migration/migration-dns-update/" class="btn-secondary">← Previous: GCP Migration Lab</a>
+    <a href="../../introduction/" class="btn-secondary">← Previous: Introduction</a>
   </div>
   <div class="nav-item">
     <span><strong>DevOps Lab</strong></span>

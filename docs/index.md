@@ -30,7 +30,7 @@
       Create intelligent virtual agents using CX Agent Studio. Build conversational AI that can understand, respond, and assist users effectively.
     </div>
     <div class="card-actions">
-      <a href="virtual-agent/virtual-agent-lab/" class="btn-primary">Build Virtual Agent</a>
+      <a href="virtual-agent/sokoai-lab/" class="btn-primary">Build Virtual Agent</a>
     </div>
   </div>
 

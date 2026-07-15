@@ -35,7 +35,7 @@ Soko AI Agent (Root)
  └──► Accounts Agent     (orders + delivery + policies)
 ```
 
-![Complete agent setup](assets/final complete agent setup.png)
+![Complete agent setup](assets/final-complete-agent-setup.png)
 
 ---
 

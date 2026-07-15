@@ -1,7 +1,8 @@
 site_name: Pawa IT Cloud Mastery Training
 site_author: Pawa IT Solutions
 site_description: A comprehensive training guide for Cloud Mastery covering DevOps and Virtual Agents.
-site_url: https://docs.cloudpartner.africa
+site_url: https://cloudmastery.cloudpartner.africa
+
 
 theme:
   name: material

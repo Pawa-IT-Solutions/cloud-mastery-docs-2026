@@ -79,7 +79,7 @@ A configuration page opens. Complete the following settings:
     <a href="../sokoai-agent-instructions/" class="btn-secondary">← Previous: Agent Instructions</a>
   </div>
   <div class="nav-item">
-    <span><strong>Section 30</strong> - SokoAI: Deployment</span>
+    <span><strong>SokoAI: Deployment</strong></span>
   </div>
   <div class="nav-item">
     <a href="../sokoai-testing/" class="btn-primary">Next: Testing →</a>
