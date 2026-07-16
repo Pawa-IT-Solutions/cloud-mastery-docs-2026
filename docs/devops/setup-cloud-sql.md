@@ -151,7 +151,7 @@ You will need these four values when configuring GitHub secrets in a later step.
 
 ```shell
 DB_NAME = cloud_mastery_sample
-DB_PASS = Cloud_Mastery2
+DB_PASS = Mastery_Cloud1
 DB_USER = Cloud_Mastery1
 CLOUDSQL_INSTANCE_CONNECTION_NAME = [PROJECT_ID]:us-central1:cloud-mastery-db-v8
 ```
