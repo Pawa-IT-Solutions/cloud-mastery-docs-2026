@@ -54,8 +54,8 @@ In this section you will create a Cloud SQL (MySQL) database instance, add a use
 
     | Field | Value |
     |---|---|
-    | Username | `Cloud_Mastery1` |
-    | Password | `Cloud_Mastery2` |
+    | Username | `Cloud_Mastery` |
+    | Password | `Mastery_Cloud1` |
 
 3. Click **Add** to save.
 
