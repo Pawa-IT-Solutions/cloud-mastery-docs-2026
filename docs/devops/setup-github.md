@@ -9,7 +9,7 @@ In this section you will fork the Cloud Mastery 2026 repository to your GitHub a
 Forking creates a personal copy of the project under your own GitHub account. This lets you make changes without affecting the original codebase. The repo contains both the backend and frontend applications you will be deploying.
 
 1. Navigate to the source repository:
-   [https://github.com/Pawa-IT-Solutions/cloud-mastery-ecommerce-2026](https://github.com/Pawa-IT-Solutions/cloud-mastery-ecommerce-2026)
+   [https://github.com/mwongeraPawa/cloud-mastery-ecommerce](https://github.com/mwongeraPawa/cloud-mastery-ecommerce)
 
 2. Locate the **Fork** button at the top-right of the page (next to the Star button). Click the dropdown and select **Create a new fork**.
 
