@@ -39,7 +39,7 @@ This tool connects to the Cloud Run cart service and handles all cart operations
 
 2. Set the tool name to `process_cart`.
 
-    ![Add process_cart tool name](assets/add process-cart config.png)
+    ![Add process_cart tool name](assets/add-process-cart-config.png)
 
 3. Below the **Authentication** tab, switch to **YAML configuration**.
 
@@ -509,13 +509,13 @@ This tool gives the Finance Agent access to financial instruments data stored in
 
 1. Click **Add tool**, then select **Datastore**.
 
-    ![Select Datastore tool type](assets/select datastore-tool.png)
+    ![Select Datastore tool type](assets/select-datastore-tool.png)
 
 2. Set the name to `finance_table`.
 
 3. Click **Create new data store**. This opens a new screen.
 
-    ![Create new data store](assets/create datastore.png)
+    ![Create new data store](assets/create-datastore.png)
 
 4. Select **BigQuery** as the data source.
 
@@ -598,7 +598,7 @@ This widget displays product cards visually inside the chat interface for both t
 
 2. In the side panel, click **Add widget**.
 
-    ![Add widget button](assets/add widget.png)
+    ![Add widget button](assets/add-widget.png)
 
 3. Select **product_carousel**.
 
