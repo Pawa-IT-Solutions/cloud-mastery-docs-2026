@@ -123,7 +123,7 @@ Once the import completes you can confirm the tables were created using Cloud SQ
 
     ![Select Cloud SQL Studio](assets/images/select-cloudsqlstudio.png)
 
-2. Select the `cloud_mastery_sample` database, enter your username (`Cloud_Mastery1`) and password (`Cloud_Mastery2`), and click **Authenticate**.
+2. Select the `cloud_mastery_sample` database, enter your username (`Cloud_Mastery`) and password (`Mastery_Cloud1`), and click **Authenticate**.
 
     ![Login to database](assets/images/Login-Database.png)
 
@@ -152,7 +152,7 @@ You will need these four values when configuring GitHub secrets in a later step.
 ```shell
 DB_NAME = cloud_mastery_sample
 DB_PASS = Mastery_Cloud1
-DB_USER = Cloud_Mastery1
+DB_USER = Cloud_Mastery
 CLOUDSQL_INSTANCE_CONNECTION_NAME = [PROJECT_ID]:us-central1:cloud-mastery-db-v8
 ```
 

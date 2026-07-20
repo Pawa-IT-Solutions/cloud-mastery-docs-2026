@@ -13,21 +13,21 @@ Forking creates a personal copy of the project under your own GitHub account. Th
 
 2. Locate the **Fork** button at the top-right of the page (next to the Star button). Click the dropdown and select **Create a new fork**.
 
-    ![Click the Fork button](assets/images/click-github-fork.png)
+    ![Click the Fork button](assets/images/fork-newrepo.png)
 
 3. On the **Create a new fork** page configure the following:
 
     | Field | Value |
     |---|---|
     | Owner | Your personal GitHub username (e.g., `eddie582`) |
-    | Repository Name | `cloud-mastery-ecommerce-2026` |
+    | Repository Name | `cloud-mastery-ecommerce` |
     | Copy the main branch only | ✅ Keep checked |
 
 4. Click the green **Create fork** button.
 
     ![Create the new fork](assets/images/click-create-fork.png)
 
-    After a moment you will be redirected to your own copy. The top-left should now read `your-username/cloud-mastery-ecommerce-2026`.
+    After a moment you will be redirected to your own copy. The top-left should now read `your-username/cloud-mastery-ecommerce`.
 
 ---
 
@@ -37,12 +37,12 @@ Now download the forked repository to your local machine.
 
 1. On your forked repository page, click the green **<> Code** button and copy the **HTTPS** or **SSH** URL.
 
-    ![Copy the repository clone URL](assets/images/copy-repository.png)
+    ![Copy the repository clone URL](assets/images/clone-repository.png)
 
 2. Open your terminal or command prompt and run the following command. Replace the URL with the one you copied from your fork:
 
     ```shell
-    git clone https://github.com/[YOUR_USERNAME]/cloud-mastery-ecommerce-2026
+    git clone https://github.com/[YOUR_USERNAME]/cloud-mastery-ecommerce
     ```
 
     ![Cloning the repository](assets/images/click-clone-repository.png)
@@ -50,7 +50,7 @@ Now download the forked repository to your local machine.
 3. Once the clone finishes, navigate into the project directory:
 
     ```shell
-    cd cloud-mastery-ecommerce-2026
+    cd cloud-mastery-ecommerce
     ```
 
     ![Cloned repository ready](assets/images/cloud-mastery-cloned-repo.png)
@@ -59,17 +59,17 @@ Now download the forked repository to your local machine.
 
 ## Step 3: Open the Project in Your IDE
 
-Open the `cloud-mastery-ecommerce-2026` folder in your preferred IDE — VS Code or Antigravity IDE.
+Open the `cloud-mastery-ecommerce` folder in your preferred IDE — VS Code or Antigravity IDE.
 
 === "VS Code"
 
     ```shell
-    code cloud-mastery-ecommerce-2026
+    code cloud-mastery-ecommerce
     ```
 
 === "Antigravity IDE"
 
-    Open the Antigravity IDE, then use **File → Open Folder** and select the `cloud-mastery-ecommerce-2026` directory.
+    Open the Antigravity IDE, then use **File → Open Folder** and select the `cloud-mastery-ecommerce` directory.
 
 !!! note
     The repository contains both the `/backend` (NestJS) and `/frontend` (Next.js) applications, as well as the `setup-github-wif.sh` script you will use in the next section.
@@ -81,7 +81,7 @@ Open the `cloud-mastery-ecommerce-2026` folder in your preferred IDE — VS Code
 You will need this value when setting up Workload Identity Federation in the next section:
 
 ```shell
-GITHUB_REPO = [YOUR_USERNAME]/cloud-mastery-ecommerce-2026
+GITHUB_REPO = [YOUR_USERNAME]/cloud-mastery-ecommerce
 ```
 
 ---

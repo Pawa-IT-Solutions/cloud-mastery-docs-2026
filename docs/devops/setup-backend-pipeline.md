@@ -19,7 +19,7 @@ You need three values from your GCP project. Find them on the GCP Welcome page:
 |---|---|
 | `PROJECT_ID` | GCP Welcome page — Project ID field |
 | `PROJECT_NUMBER` | GCP Welcome page — Project number field |
-| `GITHUB_REPO` | `[YOUR_USERNAME]/cloud-mastery-ecommerce-2026` |
+| `GITHUB_REPO` | `[YOUR_USERNAME]/cloud-mastery-ecommerce` |
 
 ---
 
@@ -41,7 +41,7 @@ You need three values from your GCP project. Find them on the GCP Welcome page:
 
     ```shell
     export PROJECT_ID="[YOUR_PROJECT_ID]"
-    export GITHUB_REPO="[YOUR_USERNAME]/cloud-mastery-ecommerce-2026"
+    export GITHUB_REPO="[YOUR_USERNAME]/cloud-mastery-ecommerce"
     export PROJECT_NUMBER="[YOUR_PROJECT_NUMBER]"
     ```
 
@@ -49,7 +49,7 @@ You need three values from your GCP project. Find them on the GCP Welcome page:
 
     ```shell
     set PROJECT_ID="[YOUR_PROJECT_ID]"
-    set GITHUB_REPO="[YOUR_USERNAME]/cloud-mastery-ecommerce-2026"
+    set GITHUB_REPO="[YOUR_USERNAME]/cloud-mastery-ecommerce"
     set PROJECT_NUMBER="[YOUR_PROJECT_NUMBER]"
     ```
 
@@ -104,7 +104,26 @@ This command tells Google Cloud to trust GitHub's identity tokens.
 
 ---
 
-## Step 5: Bind GitHub to the Workload Identity Pool
+## Step 5: Run the Setup Script
+
+The repository includes a helper script (`setup-github-wif.sh` / `setup-github-wif.bat`) that enables the required GCP APIs and configures IAM permissions for the `github-deploy-sa` service account.
+
+### Running from your local machine (Linux/macOS)
+
+1. Open `setup-github-wif.sh` in your IDE and edit the `GITHUB_OWNER` variable to match your GitHub username.
+
+    ![Edit GITHUB_OWNER in the script — Linux/macOS](assets/images/change-githubowner.png)
+
+2. Log in with the email you were given, then make the script executable and run it:
+
+    ```shell
+    gcloud auth application-default login
+    chmod +x setup-github-wif.sh
+    ./setup-github-wif.sh
+    ```
+---
+
+## Step 6: Bind GitHub to the Workload Identity Pool
 
 This allows GitHub to establish a connection with your GCP project.
 
@@ -125,24 +144,6 @@ This allows GitHub to establish a connection with your GCP project.
     ```
 
 ---
-
-## Step 6: Run the Setup Script
-
-The repository includes a helper script (`setup-github-wif.sh` / `setup-github-wif.bat`) that enables the required GCP APIs and configures IAM permissions for the `github-deploy-sa` service account.
-
-### Running from your local machine (Linux/macOS)
-
-1. Open `setup-github-wif.sh` in your IDE and edit the `GITHUB_OWNER` variable to match your GitHub username.
-
-    ![Edit GITHUB_OWNER in the script — Linux/macOS](assets/images/change-githubowner.png)
-
-2. Log in with the email you were given, then make the script executable and run it:
-
-    ```shell
-    gcloud auth application-default login
-    chmod +x setup-github-wif.sh
-    ./setup-github-wif.sh
-    ```
 
 ### Running from Windows
 
@@ -189,7 +190,7 @@ GCP_DEPLOYER_SERVICE_ACCOUNT_EMAIL: github-deploy-sa@[PROJECT_ID].iam.gserviceac
 
 In the GCP Console go to **IAM & Admin → Service Accounts** and confirm `github-deploy-sa` was created. Copy its email address.
 
-![github-deploy-sa service account](assets/images/service_acccount-mh.png)
+![github-deploy-sa service account](assets/images/created-service-account.png)
 
 ---
 
@@ -214,9 +215,9 @@ GitHub Actions secrets let the pipeline access sensitive configuration without e
     | `CLOUD_RUN_FRONTEND_SERVICE_NAME` | `soko-frontend` |
     | `CLOUDSQL_INSTANCE_CONNECTION_NAME` | Copied from the Cloud SQL step |
     | `DB_NAME` | `cloud_mastery_sample` |
-    | `DB_USER` | `Cloud_Mastery1` |
-    | `DB_PASSWORD` | `Cloud_Mastery2` |
-    | `MYSQL_PRISMA_URL` | `mysql://Cloud_Mastery1:Cloud_Mastery2@localhost:3306/cloud_mastery_sample?socket=/cloudsql/[CLOUDSQL_INSTANCE_CONNECTION_NAME]` |
+    | `DB_USER` | `Cloud_Mastery` |
+    | `DB_PASSWORD` | `Mastery_Cloud1` |
+    | `MYSQL_PRISMA_URL` | `mysql://Cloud_Mastery:Mastery_Cloud1@localhost:3306/cloud_mastery_sample?socket=/cloudsql/[CLOUDSQL_INSTANCE_CONNECTION_NAME]` |
     | `FRONTEND_NEXT_PUBLIC_CART_API_URL` | `https://checkout-service-[PROJECT_NUMBER].us-central1.run.app` |
     | `FRONTEND_NEXT_PUBLIC_CHAT_DEPLOYMENT` | *(provided by trainer)* |
     | `FRONTEND_NEXT_PUBLIC_CHAT_TITLE` | `SokoAI Agent` |

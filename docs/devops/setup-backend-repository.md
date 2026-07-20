@@ -9,15 +9,15 @@ You need your own copy of the application repository to make changes. This is do
 
 2.  Click the **Fork** button in the top-right corner.
 
-    ![Fork the Backend Repository](assets/images/github_fork_button_backend.png)
+    ![Fork the Backend Repository](assets/images/fork-newrepo.png)
 
 3.  On the "Create a new fork" page, you can leave the details as they are and click **Create fork**.
 
-    ![Create Fork Page](assets/images/github_create_fork_page_backend.png)
+    ![Create Fork Page](assets/images/click-create-fork.png)
 
 4.  You will be redirected to your own forked copy of the repository. It is now ready!
 
-    ![Forked Repository is Ready](assets/images/github_forked_repo_ready_backend.png)
+    ![Forked Repository is Ready](assets/images/cloud-mastery-cloned-repo.png)
 
 ---
 
@@ -27,7 +27,7 @@ Now you can clone your forked repository.
 
 1.  In GitHub, navigate to your forked `cloud-mastery-backend` repository. Click the green **<> Code** button, select the **SSH** tab, and copy the SSH URL.
 
-    ![Copy SSH Clone URL](assets/images/github_copy_ssh_clone_url_backend.png)
+    ![Copy SSH Clone URL](assets/images/clone-repository.png)
 
 2.  Go back to your **Cloud Shell** terminal and run the `git clone` command, pasting the URL you just copied.
     Replace the URL with your own forked repository SSH URL
@@ -38,14 +38,14 @@ Now you can clone your forked repository.
 
 3.  When prompted `Are you sure you want to continue connecting (yes/no/[fingerprint])?`, type `yes` and press `Enter`.
 
-    ![Git Clone Output in Cloud Shell](assets/images/cloudshell_git_clone_backend.png)
+    ![Git Clone Output in Cloud Shell](assets/images/cloud-mastery-cloned-repo.png)
 
 4.  Navigate into the newly created directory and list its contents.
 
     ```
     cd cloud-mastery-backend && ls -l
     ```
-    ![List Cloned Repository Files](assets/images/cloudshell_list_cloned_files_backend.png)
+    ![List Cloned Repository Files](assets/images/cloud-mastery-cloned-repo.png)
 
 ---
 
